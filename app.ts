@@ -6,16 +6,10 @@ import sequelize from './config/config';
 import photoRouter from './router/photo'; // Photo 라우터 파일 추가
 
 const app: Express = express();
-const port: number = 3001;
-
-// cors
-const whiteList: string[] = [
-    'http://localhost:5500',
-    'http://127.0.0.1:5500'
-];
+const PORT: number = 5000;
 
 const corsOptions: cors.CorsOptions = {
-    origin: whiteList,
+    origin: true,
     credentials: true
 };
 
@@ -43,6 +37,6 @@ sequelize.sync()
         console.error('Error syncing database:', error);
     });
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+app.listen(PORT, () => {
+    console.log(`Example app listening on port ${PORT}`);
 });
