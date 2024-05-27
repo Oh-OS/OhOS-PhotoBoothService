@@ -69,4 +69,24 @@ router.post('/photos', upload.single('photo'), async (req: Request, res: Respons
     }
 });
 
+// DELETE 메서드 추가
+router.delete('/photos/:id', async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        const photo = await Photo.findByPk(id);
+        if (!photo) {
+            res.status(404).json({ message: '포토를 찾을 수 없습니다.' });
+            return;
+        }
+
+        // 데이터베이스에서 삭제
+        await photo.destroy();
+
+        res.status(200).json({ message: '포토가 삭제되었습니다.' });
+    } catch (error: any) {
+        console.log(error)
+        res.status(500).json({ message: error.message });
+    }
+});
+
 export default router;
